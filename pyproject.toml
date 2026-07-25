@@ -9,3 +9,15 @@ dependencies = [
     "python-elastic-logstash>=2.0.0",
     "requests>=2.34.2",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.1",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+extend-select = ["I", "N", "UP", "ANN"]

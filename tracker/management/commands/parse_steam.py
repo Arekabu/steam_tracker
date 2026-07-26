@@ -1,4 +1,5 @@
 import logging
+from datetime import UTC, datetime, timedelta
 
 import requests
 from django.core.management.base import BaseCommand
@@ -35,6 +36,10 @@ class Command(BaseCommand):
                 logger.info(f"🔍 Доступные поля: {list(first_game.keys())}")
                 self.stdout.write(f"🔍 Доступные поля: {list(first_game.keys())}")
 
+            ccu_date = datetime.now(tz=UTC).date() - timedelta(days=1)
+            self.stdout.write(f"📅 Данные CCU за: {ccu_date.strftime('%d.%m.%Y')}")
+            logger.info(f"📅 Данные CCU за: {ccu_date}")
+
             with transaction.atomic():
                 for appid, game_data in data.items():
                     # Извлекаем CCU (пиковый онлайн)
@@ -70,13 +75,17 @@ class Command(BaseCommand):
                 # Логируем топ-5 по CCU
                 top_games = Game.objects.order_by("-ccu")[:5]
                 self.stdout.write(
-                    self.style.SUCCESS("\n🏆 Топ-5 игр по пиковому онлайну (CCU):")
+                    self.style.SUCCESS(
+                        f"\n🏆 Топ-5 игр по пиковому онлайну (CCU) на {ccu_date.strftime('%d.%m.%Y')}:"
+                    )
                 )
                 for i, game in enumerate(top_games, 1):
                     self.stdout.write(
                         f"  {i}. {game.name} - {game.ccu:,} игроков (CCU)"
                     )
-                    logger.info(f"🏆 Топ-{i}: {game.name} - CCU: {game.ccu}")
+                    logger.info(
+                        f"🏆 Топ-{i}: {game.name} - CCU: {game.ccu} (на {ccu_date})"
+                    )
 
         except requests.exceptions.RequestException as e:
             logger.error(f"❌ Ошибка при запросе к Steam API: {e!s}")

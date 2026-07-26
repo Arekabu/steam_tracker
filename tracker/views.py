@@ -1,4 +1,5 @@
 import logging
+from datetime import UTC, datetime, timedelta
 
 from django.contrib import messages
 from django.core.management import call_command
@@ -21,13 +22,14 @@ def game_list(request: HttpRequest) -> HttpResponse:
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    ccu_date = datetime.now(tz=UTC).date() - timedelta(days=1)
+
     context = {
         "page_obj": page_obj,
         "total_games": games.count(),
         "last_update": games.first().updated_at if games.exists() else None,
-        "top_game": games.order_by("-ccu").first()
-        if games.exists()
-        else None,  # 👈 ДОБАВЛЕНО
+        "top_game": games.order_by("-ccu").first() if games.exists() else None,
+        "ccu_date": ccu_date,
     }
 
     logger.info(

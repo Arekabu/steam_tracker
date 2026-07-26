@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Топ-100 игр Steam</title>
+
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon/steam.ico' %}">
+
     <style>
         * {
             margin: 0;
@@ -191,6 +195,7 @@
     <div class="stats">
         Всего игр: <span>{{ total_games }}</span> |
         Последнее обновление: <span>{{ last_update|date:"d.m.Y H:i" }}</span> |
+        CCU данные на: <span>{{ ccu_date|date:"d.m.Y" }}</span> |
         Топ-1: <span>{{ top_game.name }}</span> ({{ top_game.ccu|floatformat:0 }} CCU)
     </div>
 
@@ -202,7 +207,7 @@
                 <th>Название игры</th>
                 <th>Разработчик</th>
                 <th>Владельцы (диапазон)</th>
-                <th>Пиковый онлайн (CCU)</th>
+                <th>Пиковый онлайн (CCU на {{ ccu_date|date:"d.m.Y" }})</th>
             </tr>
             </thead>
             <tbody>

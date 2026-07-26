@@ -188,13 +188,10 @@ wheels = [
 ]
 
 [[package]]
-name = "python-elastic-logstash"
-version = "2.0.0"
+name = "python-logstash"
+version = "0.4.8"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/82/b0/ea5677b0a624290ad35400e260466c3aa99f685e6fd83e585075ae82456b/python_elastic_logstash-2.0.0.tar.gz", hash = "sha256:e504f238e275d3f21f1d1b76b0f79f737d255edb7bbb99032a9b7a31dfa98bd7", size = 3880, upload-time = "2021-01-31T08:44:33.262Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/51/05/bfafc82d61696b15846007637c177010ab0fe96da4d6a8828421f36f8bd5/python_elastic_logstash-2.0.0-py3-none-any.whl", hash = "sha256:7c8375b34a5e6eee640f75b890538ff115e7e168c4100b6106335205b96f1ed7", size = 4743, upload-time = "2021-01-31T08:44:31.815Z" },
-]
+sdist = { url = "https://files.pythonhosted.org/packages/f7/3b/c3a957bbdd23859f07905fc3d1adfe89957217a347478c58409f0315cf1d/python-logstash-0.4.8.tar.gz", hash = "sha256:d04e1ce11ecc107e4a4f3b807fc57d96811e964a554081b3bbb44732f74ef5f9", size = 7074, upload-time = "2022-03-30T11:58:04.095Z" }
 
 [[package]]
 name = "pyyaml"
@@ -272,7 +269,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "django" },
-    { name = "python-elastic-logstash" },
+    { name = "python-logstash" },
     { name = "requests" },
 ]
 
@@ -284,7 +281,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = ">=6.0.7" },
-    { name = "python-elastic-logstash", specifier = ">=2.0.0" },
+    { name = "python-logstash", specifier = ">=0.4.8" },
     { name = "requests", specifier = ">=2.34.2" },
 ]
 

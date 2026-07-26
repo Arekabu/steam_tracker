@@ -10,6 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -17,6 +18,7 @@
             padding: 20px;
             color: #fff;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -26,6 +28,7 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
+
         h1 {
             text-align: center;
             font-size: 2.5em;
@@ -35,30 +38,36 @@
             -webkit-text-fill-color: transparent;
             text-shadow: none;
         }
+
         .stats {
             text-align: center;
             color: #8892b0;
             margin-bottom: 30px;
             font-size: 0.95em;
         }
+
         .stats span {
             color: #64ffda;
             font-weight: bold;
         }
+
         .table-wrapper {
             overflow-x: auto;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.03);
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.95em;
         }
+
         thead {
             background: rgba(100, 255, 218, 0.1);
             border-bottom: 2px solid #64ffda;
         }
+
         th {
             padding: 15px 20px;
             text-align: left;
@@ -68,26 +77,32 @@
             font-size: 0.8em;
             letter-spacing: 1px;
         }
+
         td {
             padding: 12px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         tr:hover {
             background: rgba(100, 255, 218, 0.05);
             transition: background 0.3s;
         }
+
         .rank {
             font-weight: bold;
             color: #64ffda;
             width: 50px;
         }
+
         .game-name {
             font-weight: 500;
         }
+
         .players {
             color: #ffd700;
             font-weight: 600;
         }
+
         .badge {
             display: inline-block;
             background: rgba(100, 255, 218, 0.15);
@@ -97,6 +112,7 @@
             font-size: 0.75em;
             margin-left: 10px;
         }
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -104,6 +120,7 @@
             margin-top: 30px;
             flex-wrap: wrap;
         }
+
         .pagination a, .pagination span {
             padding: 8px 16px;
             background: rgba(255, 255, 255, 0.05);
@@ -113,16 +130,19 @@
             transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .pagination a:hover {
             background: rgba(100, 255, 218, 0.2);
             border-color: #64ffda;
             transform: translateY(-2px);
         }
+
         .pagination .current {
             background: #64ffda;
             color: #1a1a2e;
             font-weight: bold;
         }
+
         .update-btn {
             display: block;
             margin: 20px auto 0;
@@ -136,23 +156,28 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+
         .update-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 210, 255, 0.3);
         }
+
         .footer {
             text-align: center;
             margin-top: 30px;
             color: #495670;
             font-size: 0.8em;
         }
+
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
             }
+
             h1 {
                 font-size: 1.8em;
             }
+
             td, th {
                 padding: 8px 12px;
                 font-size: 0.85em;
@@ -161,77 +186,78 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎮 Топ-100 игр Steam</h1>
-        <div class="stats">
-            Всего игр: <span>{{ total_games }}</span> |
-            Последнее обновление: <span>{{ last_update|date:"d.m.Y H:i" }}</span>
-        </div>
+<div class="container">
+    <h1>🎮 Топ-100 игр Steam</h1>
+    <div class="stats">
+        Всего игр: <span>{{ total_games }}</span> |
+        Последнее обновление: <span>{{ last_update|date:"d.m.Y H:i" }}</span> |
+        Топ-1: <span>{{ top_game.name }}</span> ({{ top_game.ccu|floatformat:0 }} CCU)
+    </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Название игры</th>
-                        <th>ID</th>
-                        <th>Игроков (2 недели)</th>
-                        <th>Игроков (всего)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for game in page_obj %}
-                    <tr>
-                        <td class="rank">#{{ forloop.counter0|add:page_obj.start_index }}</td>
-                        <td class="game-name">
-                            {{ game.name }}
-                            {% if forloop.counter <= 3 %}
-                                <span class="badge">🏆 Топ-{{ forloop.counter }}</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ game.appid }}</td>
-                        <td class="players">{{ game.players_2weeks|floatformat:0 }}</td>
-                        <td>{{ game.players_forever|floatformat:0 }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5" style="text-align: center; padding: 40px; color: #8892b0;">
-                            😕 Данные еще не загружены. Запустите парсинг!
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название игры</th>
+                <th>Разработчик</th>
+                <th>Владельцы (диапазон)</th>
+                <th>Пиковый онлайн (CCU)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in page_obj %}
+            <tr>
+                <td class="rank">#{{ forloop.counter0|add:page_obj.start_index }}</td>
+                <td class="game-name">
+                    {{ game.name }}
+                    {% if forloop.counter <= 3 %}
+                    <span class="badge">🏆 Топ-{{ forloop.counter }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ game.developer|default:"—" }}</td>
+                <td>{{ game.owners|default:"—" }}</td>
+                <td class="players">{{ game.ccu|floatformat:0 }}</td>
 
-        <!-- Пагинация -->
-        {% if page_obj.paginator.num_pages > 1 %}
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">« Первая</a>
-                <a href="?page={{ page_obj.previous_page_number }}">‹ Назад</a>
-            {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 40px; color: #8892b0;">
+                    😕 Данные еще не загружены. Запустите парсинг!
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-            <span class="current">
+    <!-- Пагинация -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">« Первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}">‹ Назад</a>
+        {% endif %}
+
+        <span class="current">
                 Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
             </span>
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Вперед ›</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
-            {% endif %}
-        </div>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Вперед ›</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
         {% endif %}
-
-        <!-- Кнопка для ручного запуска парсинга (опционально) -->
-        <form action="{% url 'parse_games' %}" method="post" style="text-align: center;">
-            {% csrf_token %}
-            <button type="submit" class="update-btn">🔄 Обновить данные</button>
-        </form>
-
-        <div class="footer">
-            Данные предоставлены <a href="https://steamspy.com/" target="_blank" style="color: #64ffda;">SteamSpy</a>
-        </div>
     </div>
+    {% endif %}
+
+    <form action="{% url 'tracker:parse_games' %}" method="post" style="text-align: center;">
+        {% csrf_token %}
+        <button type="submit" class="update-btn">🔄 Обновить данные</button>
+    </form>
+
+    <div class="footer">
+        Данные предоставлены <a href="https://steamspy.com/" target="_blank" style="color: #64ffda;">SteamSpy</a>
+    </div>
+</div>
 </body>
 </html>

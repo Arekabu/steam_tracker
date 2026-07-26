@@ -83,6 +83,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+# settings.py - простая версия без logstash
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -101,7 +102,7 @@ LOGGING = {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
             "filename": BASE_DIR / "logs" / "django.log",
-            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "maxBytes": 1024 * 1024 * 5,
             "backupCount": 5,
             "formatter": "verbose",
         },
@@ -109,17 +110,6 @@ LOGGING = {
             "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "simple",
-        },
-        # Для отправки в Logstash (будет позже)
-        "logstash": {
-            "level": "INFO",
-            "class": "logstash.TCPLogstashHandler",
-            "host": "logstash",  # имя сервиса в docker-compose
-            "port": 5000,
-            "version": 1,
-            "message_type": "django",
-            "fqdn": False,
-            "tags": ["django", "steam-tracker"],
         },
     },
     "loggers": {

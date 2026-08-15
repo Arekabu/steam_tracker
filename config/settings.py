@@ -111,15 +111,25 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
+        "logstash": {
+            "level": "INFO",
+            "class": "logstash.TCPLogstashHandler",
+            "host": "logstash",
+            "port": 5000,
+            "version": 1,
+            "message_type": "django",
+            "fqdn": False,
+            "tags": ["django", "steam-tracker"],
+        },
     },
     "loggers": {
         "tracker": {
-            "handlers": ["file", "console"],
+            "handlers": ["file", "console", "logstash"],
             "level": "INFO",
             "propagate": True,
         },
         "django": {
-            "handlers": ["file", "console"],
+            "handlers": ["file", "console", "logstash"],
             "level": "INFO",
             "propagate": True,
         },

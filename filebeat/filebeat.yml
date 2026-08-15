@@ -1,0 +1,16 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /logs/django.log
+    fields:
+      source: django
+      environment: production
+    fields_under_root: true
+    json.keys_under_root: true
+    json.add_error_key: true
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+logging.level: info

@@ -6,6 +6,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+      - /app/.venv
+      - /app/__pycache__
       - ./logs:/app/logs
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings

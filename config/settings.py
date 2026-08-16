@@ -83,7 +83,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# settings.py - простая версия без logstash
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -117,7 +116,7 @@ LOGGING = {
             "host": "logstash",
             "port": 5000,
             "version": 1,
-            "message_type": "django",
+            "message_type": "django-tcp",
             "fqdn": False,
             "tags": ["django", "steam-tracker"],
         },
